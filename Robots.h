@@ -10,10 +10,9 @@ class Robots{
 		Restaurar PosicionesServo2;  // Las cajas ya tendrán posiciones constantes en la maqueta, por lo cual los servos tendrían que tener posiciones
 		Restaurar PosicionesServo3;  //constantes (posiciones de algoritmo para guardar cajas), pero en la realidad es que los servos nunca mantienen 
 		Restaurar PosicionesServo4;  // la misma posicion, esto debido a la temperatura en su interior respecto al tiempo. Es por eso que desarrollo posiciones
-		Movimientos servo1;          //para que estas se puedan modificar, entonces los atributos son angulos/posiciones en forma de matrices
-		Articulacion servo2;   // objetos de clase Movimientos, estos serán los motores que se mueven a travez de grados, cada uno
-		Articulacion servo3;   //inicia con un grado distinto (atributo grado/posicion)
-		Mano servo4;
+									//para que estas se puedan modificar, entonces los atributos son angulos/posiciones en forma de matrices
+		Movimientos servo1;
+		Movimientos *servos[5];   //variable puntero, motivo de polimorfismo
 		Cajas cajasVerdes; //inicializo mis 3 cajas (objetos) de clase Cajas, con cantidad inicial de 0 cajas cada una
 		Cajas cajasRojas;
 		Cajas cajasAmarillas;
@@ -59,8 +58,19 @@ class Robots{
 		int get_CantidadCajasVerdes();
 		int get_CantidadCajasRojas();     // pido la información de la cantidad de dichas cajas
 		int get_CantidadCajasAmarillas();
+		void goHome(){
+						cout<<"Yendo a home..."<<endl;
+						cout<<"Servo1: "<<servo1.home()<<endl;
+						cout<<"Servo2: "<<servos[2]->home()<<endl;
+						cout<<"Servo3: "<<servos[3]->home()<<endl;
+						cout<<"Servo4: "<<servos[4]->home()<<endl;
+					}
+						
 };
 Robots::Robots(){                                              //constructor que inicializa mis objetos de tipo Robots con ...
+	servos[2]=new Articulacion();
+	servos[3]=new Articulacion();
+	servos[4]=new Mano();
 	int Servo1posicionI[100][100]={{13,42,74},{13,42,74},{13,42,74},{0,28,56},{0,28,56},{94,112,135},{94,112,135},{94,112,135},{101,101,101}}; //angulos iniciales
 	int Servo2posicionI[100][100]={{98,2,3},{4,5,6},{7,8,9},{10,11,12},{13,14,15},{16,17,18},{19,20,21},{22,23,24},{25,26,27}}; //angulos iniciales
 	int Servo3posicionI[100][100]={{99,2,3},{4,5,6},{7,8,9},{10,11,12},{13,14,15},{16,17,18},{19,20,21},{22,23,24},{25,26,27}}; //angulos iniciales
@@ -70,9 +80,9 @@ Robots::Robots(){                                              //constructor que
 	PosicionesServo3.set_posicionCompleto(Servo3posicionI);
 	PosicionesServo4.set_posicionCompleto(Servo4posicionI);
 	servo1.set_angulo(101);
-	servo2.set_angulo(70);
-	servo3.set_angulo(75);
-	servo4.set_angulo(21);
+	servos[2]->set_angulo(70);
+	servos[3]->set_angulo(75);
+	servos[4]->set_angulo(21);
 	// en los setters hago mi agregación de dichas cajas
 	
 }
@@ -106,15 +116,15 @@ void Robots::set_anguloServo1(int ang){
 }
 
 void Robots::set_anguloServo2(int ang){
-	servo2.set_angulo(ang);
+	servos[2]->set_angulo(ang);
 }
 
 void Robots::set_anguloServo3(int ang){
-	servo3.set_angulo(ang);
+	servos[3]->set_angulo(ang);
 }
 
 void Robots::set_anguloServo4(int ang){
-	servo4.set_angulo(ang);
+	servos[4]->set_angulo(ang);
 }
 
 int Robots::get_anguloServo1(){
@@ -122,47 +132,47 @@ int Robots::get_anguloServo1(){
 }
 
 int Robots::get_anguloServo2(){
-	return servo2.get_angulo();
+	return servos[2]->get_angulo();
 }
 
 int Robots::get_anguloServo3(){
-	return servo3.get_angulo();
+	return servos[3]->get_angulo();
 }
 
 int Robots::get_anguloServo4(){
-	return servo4.get_angulo();
+	return servos[4]->get_angulo();
 }
 
 void Robots::set_temperaturaServo2(int temp){
-	servo2.set_temperatura(temp);
+	servos[2]->set_temperatura(temp);
 }
 
 void Robots::set_temperaturaServo3(int temp){
-	servo3.set_temperatura(temp);
+	servos[2]->set_temperatura(temp);
 }
 
 int Robots::get_temperaturaServo2(){
-	return servo2.get_temperatura();
+	return servos[2]->get_temperatura();
 }
 
 int Robots::get_temperaturaServo3(){
-	return servo3.get_temperatura();
+	return servos[3]->get_temperatura();
 }
 
 void Robots::set_limiteAberturaServo4(int limA){
-	servo4.set_limiteAbertura(limA);
+	servos[4]->set_limiteAbertura(limA);
 }
 
 void Robots::set_limiteCerraduraServo4(int limC){
-	servo4.set_limiteCerradura(limC);
+	servos[4]->set_limiteCerradura(limC);
 }
 
 int Robots::get_limiteAberturaServo4(){
-	return servo4.get_limiteAbertura();
+	return servos[4]->get_limiteAbertura();
 }
 
 int Robots::get_limiteCerraduraServo4(){
-	return servo4.get_limiteCerradura();
+	return servos[4]->get_limiteCerradura();
 }
 
 void Robots::servo1Aumenta(){
@@ -170,15 +180,15 @@ void Robots::servo1Aumenta(){
 }
 
 void Robots::servo2Aumenta(){
-	servo2.Aumenta();
+	servos[2]->Aumenta();
 }
 
 void Robots::servo3Aumenta(){
-	servo3.Aumenta();
+	servos[3]->Aumenta();
 }
 
 void Robots::servo4Aumenta(){
-	servo4.Aumenta();
+	servos[4]->Aumenta();
 }
 
 void Robots::servo1Disminuye(){
@@ -186,15 +196,15 @@ void Robots::servo1Disminuye(){
 }
 
 void Robots::servo2Disminuye(){
-	servo2.Disminuye();
+	servos[2]->Disminuye();
 }
 
 void Robots::servo3Disminuye(){
-	servo3.Disminuye();
+	servos[3]->Disminuye();
 }
 
 void Robots::servo4Disminuye(){
-	servo4.Disminuye();
+	servos[4]->Disminuye();
 }
 
 void Robots::set_cajasVerdes(Cajas cV){

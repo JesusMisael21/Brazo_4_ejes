@@ -246,6 +246,7 @@ int main(){
 				break;
 		}
 	}
+	Brazo.goHome();
 	cout<<"adios";
 	return 0;
 } // end main
