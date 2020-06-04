@@ -9,10 +9,10 @@ class Movimientos{       //clase Movimientos para obtener objetos servomotores q
 		int get_angulo();
 		void Aumenta();    //prototipos de los metodos a usar
 		void Disminuye();
-		virtual void set_limiteAbertura(int limA){}        
-		virtual int get_limiteAbertura(){return 0;}
-		virtual void set_limiteCerradura(int LimC){}
-		virtual int get_limiteCerradura(){return 0;}
+		virtual void set_limiteAbertura(int limA)=0;       //método abstracto será sobreescrito ejecución
+		virtual int get_limiteAbertura()=0;                       //pure virtual
+		virtual void set_limiteCerradura(int LimC)=0;
+		virtual int get_limiteCerradura()=0;
 				// se sobreescribirán con polimorfismo
 		virtual void set_temperatura(float){}
 		virtual float get_temperatura(){return 21.0;}
@@ -46,6 +46,9 @@ void Movimientos::Disminuye(){  //metodo que me permite disminuir la posicion de
 }
 
 class Articulacion: public Movimientos{ //clase hija de Movimientos
+	private:
+		int limiteAbertura;
+		int limiteCerradura;
 		
 	public:
 		Articulacion();
@@ -54,6 +57,10 @@ class Articulacion: public Movimientos{ //clase hija de Movimientos
 		int home(){                   
 					return 80;
 					}
+		void set_limiteAbertura(int limA);
+		int get_limiteAbertura();
+		void set_limiteCerradura(int LimC);
+		int get_limiteCerradura();
 };
 
 Articulacion::Articulacion(){
@@ -66,11 +73,24 @@ float Articulacion::get_temperatura(){
 	int te=Movimientos::get_temperatura();
 	return te*0.8;
 }
+void Articulacion::set_limiteAbertura(int limA){
+	limiteAbertura=limA*2;
+}
+void Articulacion::set_limiteCerradura(int limC){
+	limiteCerradura=limC*3;
+}
+int Articulacion::get_limiteAbertura(){
+	return limiteAbertura*2;
+}
+int Articulacion::get_limiteCerradura(){
+	return limiteCerradura*3;
+}
 
 class Mano: public Movimientos{
 	private:
 		int limiteAbertura;
 		int limiteCerradura;
+		
 	public:
 		Mano();
 		Mano(int ang,float temp,int limA,int limC);

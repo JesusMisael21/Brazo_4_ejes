@@ -11,7 +11,6 @@ class Robots{
 		Restaurar PosicionesServo3;  //constantes (posiciones de algoritmo para guardar cajas), pero en la realidad es que los servos nunca mantienen 
 		Restaurar PosicionesServo4;  // la misma posicion, esto debido a la temperatura en su interior respecto al tiempo. Es por eso que desarrollo posiciones
 									//para que estas se puedan modificar, entonces los atributos son angulos/posiciones en forma de matrices
-		Movimientos servo1;
 		Movimientos *servos[5];   //variable puntero, motivo de polimorfismo
 		Cajas cajasVerdes; //inicializo mis 3 cajas (objetos) de clase Cajas, con cantidad inicial de 0 cajas cada una
 		Cajas cajasRojas;
@@ -60,14 +59,15 @@ class Robots{
 		int get_CantidadCajasAmarillas();
 		void goHome(){
 						cout<<"Yendo a home..."<<endl;
-						cout<<"Servo1: "<<servo1.home()<<endl;
+						cout<<"Servo1: "<<servos[1]->home()<<endl;
 						cout<<"Servo2: "<<servos[2]->home()<<endl;
 						cout<<"Servo3: "<<servos[3]->home()<<endl;
 						cout<<"Servo4: "<<servos[4]->home()<<endl;
 					}
 						
 };
-Robots::Robots(){                                              //constructor que inicializa mis objetos de tipo Robots con ...
+Robots::Robots(){ 
+    servos[1]=new Articulacion();                             //constructor que inicializa mis objetos de tipo Robots con ...
 	servos[2]=new Articulacion();
 	servos[3]=new Articulacion();
 	servos[4]=new Mano();
@@ -79,7 +79,7 @@ Robots::Robots(){                                              //constructor que
 	PosicionesServo2.set_posicionCompleto(Servo2posicionI);    // con los setters
 	PosicionesServo3.set_posicionCompleto(Servo3posicionI);
 	PosicionesServo4.set_posicionCompleto(Servo4posicionI);
-	servo1.set_angulo(101);
+	servos[1]->set_angulo(101);
 	servos[2]->set_angulo(70);
 	servos[3]->set_angulo(75);
 	servos[4]->set_angulo(21);
@@ -112,7 +112,7 @@ int Robots::get_particular_PosicionesServo4(int nfila,int ncolumna){
 }
 
 void Robots::set_anguloServo1(int ang){
-	servo1.set_angulo(ang);
+	servos[1]->set_angulo(ang);
 }
 
 void Robots::set_anguloServo2(int ang){
@@ -128,7 +128,7 @@ void Robots::set_anguloServo4(int ang){
 }
 
 int Robots::get_anguloServo1(){
-	return servo1.get_angulo();
+	return servos[1]->get_angulo();
 }
 
 int Robots::get_anguloServo2(){
@@ -148,7 +148,7 @@ void Robots::set_temperaturaServo2(int temp){
 }
 
 void Robots::set_temperaturaServo3(int temp){
-	servos[2]->set_temperatura(temp);
+	servos[3]->set_temperatura(temp);
 }
 
 int Robots::get_temperaturaServo2(){
@@ -176,7 +176,7 @@ int Robots::get_limiteCerraduraServo4(){
 }
 
 void Robots::servo1Aumenta(){
-	servo1.Aumenta();
+	servos[1]->Aumenta();
 }
 
 void Robots::servo2Aumenta(){
@@ -192,7 +192,7 @@ void Robots::servo4Aumenta(){
 }
 
 void Robots::servo1Disminuye(){
-	servo1.Disminuye();
+	servos[1]->Disminuye();
 }
 
 void Robots::servo2Disminuye(){
