@@ -8,8 +8,11 @@ Se usan los conceptor de programación orientado a objetos, para instanciar elem
 
        Menu:
 'a' Incrementa 1 grado servomotor 1 (base).
+
 'b' Decrementa 1 grado servomotor 1 (base).
+
 'c' Incrementa 1 grado servomotor 2 (articulacion 1).
+
 'd' Decrementa 1 grado servomotor 2 (articulacion 1).
 'e' Incrementa 1 grado servomotor 3 (articulacion 2).
 'f' Decrementa 1 grado servomotor 3 (articulacion 2).
