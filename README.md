@@ -23,11 +23,11 @@ Se usan los conceptor de programación orientado a objetos, para instanciar elem
 
 'h' Decrementa 1 grado servomotor 4 (mano).
 
-'-numero-'+',' Cantidad de cajas verdes.
+'(numero)'+',' Cantidad de cajas verdes.
        
-'-numero-'+'=' Cantidad de cajas Rojas.
+'(numero)'+'=' Cantidad de cajas Rojas.
        
-'-numero-'+'/' Cantidad de cajas Amarillas.
+'(numero)'+'/' Cantidad de cajas Amarillas.
        
 'i' Pre-guardar posicion 1 para servos 2 y 3.
 
@@ -39,9 +39,9 @@ Se usan los conceptor de programación orientado a objetos, para instanciar elem
 
 'm' Guardar posiciones pre-guardadas para los servos 2 y 3.
 
-'-numero-'+'%' Asignacion de abertura limite de la mano del robot.
+'(numero)'+'%' Asignacion de abertura limite de la mano del robot.
        
-'-numero-'+'#' Asignacion de cerradura limite de la mano del robot.
+'(numero)'+'#' Asignacion de cerradura limite de la mano del robot.
        
 'n' Guardar cajas verdes en los contenedores.
 
