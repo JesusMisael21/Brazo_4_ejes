@@ -1,6 +1,15 @@
+/*
+* Proyecto brazo robotico
+* Jesus Misael Resendiz Cruz
+* A01706166
+* 11/06/2020
+* Esta clase define objeto de tipo Restaurar que son composicion de Robots, me permite crear
+* posiciones para cada servo, esta se estara modificando con el tiempo por la temperatura
+* adquirida por el mismo servo.
+*/
 # ifndef RESTAURAR_H_
 # define  RESTAURAR_H_
-class Restaurar{
+class Restaurar{    
 	private:
 		int posicion[100][100];
 		int posicionI[100][100]={{97,8,2},{3,0,9},{8,8,9},{10,11,12},{13,14,15},{16,17,18},{19,20,21},{22,23,24},{25,26,27}}; //angulos iniciales
@@ -51,7 +60,7 @@ void Restaurar::set_posicion(int sP1,int sP2,int sP3,int sP4){ // metodo setter 
 			}
 		}
 }
-int Restaurar::particular_posicion(int nfila,int ncolumna){    //metodo getter en forma de apuntador ya que quiero que me regrese un puntero
+int Restaurar::particular_posicion(int nfila,int ncolumna){  //regresa una posicion particular
 	return posicion[nfila][ncolumna];
 }
 # endif

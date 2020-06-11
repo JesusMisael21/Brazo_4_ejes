@@ -1,19 +1,18 @@
 /*
-Jesús Misael Reséndiz Cruz
-A01706166
-
-Proyecto que simula el movimiento de un brazo robotico de 4 ejes, 
-tiene la opcion de guardar posiciones para guardar hasta 3 tipos
-de cajas que se encuentran en diferentes espacios tridimencionales por cada tipo de caja
-Por ser un abance se entrega de forma simulada con la terminal de la computadora, posteriormente
-se entregará en un sketch de arduino (usando hardware) que será controlado de manera inhalambrica por medio de una 
-interfaz gráfica manipulada desde un smarphone.
+*Proyecto brazo robotico
+*Jesús Misael Reséndiz Cruz
+*A01706166
+*
+*Proyecto que simula el movimiento de un brazo robotico de 4 ejes, 
+*tiene la opcion de guardar posiciones y actualizarlas para guardar hasta 3 tipos
+*de cajas que se encuentran en diferentes espacios tridimencionales, cada tipo de caja puede contener
+* hasta la cantidad de 3. Este robot tambien puede ser manupulado manualmente con comandos de la consola.
 */
 
 #include <iostream>
 #include <string> //usar variables tipo string
 #include <sstream> //usar istringstream para convertir cadena a entero
-#include <windows.h>
+#include <windows.h> // usar Sleep()
 using namespace std;
 #include "Cajas.h" //llamo mi clase Cajas 
 #include "Robots.h"
@@ -33,24 +32,24 @@ void menu();
 int main(){
 	
 	Brazo.set_cajasVerdes(cajVerdes);
-	Brazo.set_cajasRojas(cajRojas);          //hago agregación, envío mis objetos de tipo Cajas al objeto creado de tipo Robots (Cajas son atributos de Robots)
+	Brazo.set_cajasRojas(cajRojas);          //envío objetos de tipo Cajas al objeto creado de tipo Robots (Cajas son atributos de Robots)
 	Brazo.set_cajasAmarillas(cajAmarillas);
 	
-	int S3P1=0,S3P2=1,S3P3=2,S3P4=3; //variables locales  estas obtienen los angulos especificos para cada matriz de angulos  
-	int S2P1=5,S2P2=6,S2P3=7,S2P4=8;//ejemplo: S2P1, Servo 2 en la posicion 1
+	int S3P1=0,S3P2=1,S3P3=2,S3P4=3; //variables que obtienen los angulos especificos para cada matriz de angulos  
+	int S2P1=5,S2P2=6,S2P3=7,S2P4=8;//
 	int temperatura2=Brazo.get_temperaturaServo2();   // inicializo mis variables temperatura para los servos 2 y 3 que comunmete son afectados por este factor
 	int temperatura3=Brazo.get_temperaturaServo3();   //
 	char inchar;    //acumulador de caracteres para el swith
 	string cadena=""; //cadena de caracteres para el swith
 	int count=0,num;
 	menu();
-	while(true){   //ciclo while ya que estaremos simulando como si estuviera en un microcontrolador 
+	while(true){   //ciclo while simulando un microcontrolador 
 		cin>>inchar;           //ingreso mi texto en la pantalla dependiendo de lo que quiero que se active del swith
 		if(inchar=='q')break;
 		count++;
-		cadena+=inchar;     //entra al swith hasta que sea algun caracter de tipo letra minuscula o numeros con algun signo , = /
-		switch (inchar){   //se diseñará una interfaz gráfica que mandará mensajes al swith, 
-			case 's':				//visualmente se escogerá la opcion ya que el menu se encontrará en la aplicacion de interfaz
+		cadena+=inchar;     //entra al swith hasta que sea algun caracter del menu
+		switch (inchar){   
+			case 's':	
 				menu();    //vuelo a mostrar mi menú
 				cadena="";
 				count=0;
@@ -104,26 +103,26 @@ int main(){
 				count=0;
 				break;
 			case ',':
-				cadena=quitarChar(cadena,count);    //funcion que me quita el ultimo elemento de la cadena, 
-				istringstream(cadena)>>num;                   //quedandonme con el puro numero
+				cadena=quitarChar(cadena,count);    //quita el ultimo elemento de la cadena, 
+				istringstream(cadena)>>num;                   //quedandose con el puro numero
 				Brazo.set_CantidadCajasVerdes(num);               //posteriormente para insertarlo en el atributo de cantidad de 
 				cout<<"Cajas verdes introducidas: "<<Brazo.get_CantidadCajasVerdes()<<endl;        //cajas verdes a guardar
 				count=0;
 				cadena="";
 				break;
 			case '=':
-				cadena=quitarChar(cadena,count); //funcion que me quita el ultimo elemento de la cadena, 
-				istringstream(cadena)>>num;          //quedandonme con el puro numero
-				Brazo.set_CantidadCajasRojas(num);        //posteriormente para insertarlo en el atributo de cantidad de 
-				cout<<"Cajas Rojas introducidas: "<<Brazo.get_CantidadCajasRojas()<<endl; //cajas rojas a guardar
+				cadena=quitarChar(cadena,count); //mismo proceso para cajas rojas 
+				istringstream(cadena)>>num;        
+				Brazo.set_CantidadCajasRojas(num);        
+				cout<<"Cajas Rojas introducidas: "<<Brazo.get_CantidadCajasRojas()<<endl; 
 				count=0;
 				cadena="";
 				break;
 			case '/':
-				cadena=quitarChar(cadena,count);     //funcion que me quita el ultimo elemento de la cadena, 
-				istringstream(cadena)>>num;          //quedandonme con el puro numero
-				Brazo.set_CantidadCajasAmarillas(num);     //posteriormente para insertarlo en el atributo de cantidad de 
-				cout<<"Cajas amarillas introducidas: "<<Brazo.get_CantidadCajasAmarillas()<<endl;   //cajas rojas a guardar
+				cadena=quitarChar(cadena,count);  //mismo proceso para cajas amarillas
+				istringstream(cadena)>>num;        
+				Brazo.set_CantidadCajasAmarillas(num);     
+				cout<<"Cajas amarillas introducidas: "<<Brazo.get_CantidadCajasAmarillas()<<endl;   
 				count=0;
 				cadena="";
 				break;
@@ -197,7 +196,7 @@ int main(){
 					Brazo.set_temperaturaServo2(temperatura2++);  //incrementa la temperatura por movimiento de los servos
 					Brazo.set_temperaturaServo3(temperatura3++);
 				}
-				count=0;                                                     //posiciones
+				count=0;             
 				cadena="";
 				break;
 			case 'o':
@@ -232,7 +231,7 @@ int main(){
 							Brazo.set_anguloServo1(posiSer1[j]);
 							Brazo.set_anguloServo2(posiSer2[j]);
 							Brazo.set_anguloServo3(posiSer3[j]);
-							Brazo.set_anguloServo4(posiSer4[j]);    //itero mis apuntadores me muestran lo que mandan 
+							Brazo.set_anguloServo4(posiSer4[j]);    //itero mis apuntadores 
 							cout<<"Posicion "<<j+1<<":        "<<Brazo.get_anguloServo1()<<"            "<<Brazo.get_anguloServo2()<<"            "<<Brazo.get_anguloServo3()<<"            "<<Brazo.get_anguloServo4()<<endl;
 							Sleep(1000); // un segundo por movimiento 
 						}
@@ -250,14 +249,14 @@ int main(){
 	cout<<"adios";
 	return 0;
 } // end main
-string quitarChar(string cade, int cont){    //funcion que me elimina el ultimo caracter de mi cadena, me retorna esta nueva cadena
+string quitarChar(string cade, int cont){  //funcion que me elimina el ultimo caracter de mi cadena
 	string cad="";
 	for(int i=0;i<cont-1;i++){
 		cad=cad+cade[i];
 	}
 	return cad;
 }
-void recopilarPosiciones(int c){         //columna c donde se encuentran los 9 valores para el servo X que almacena poscicion
+void recopilarPosiciones(int c){ //columna c donde se encuentran los 9 valores para el servo X que almacena poscicion
 	for(int f=0;f<9;f++){
 		posiSer1[f]=Brazo.get_particular_PosicionesServo1(f,c);
 		posiSer2[f]=Brazo.get_particular_PosicionesServo2(f,c);

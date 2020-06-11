@@ -1,3 +1,11 @@
+/*
+* Proyecto brazo robotico
+* Jesus Misael Resendiz Cruz
+* A01706166
+* 11/06/2020
+* Esta clase define objetos de tipo Movimientos que seran composicion de Robots, estos objetos
+* son los servomotores en donde pueden ser Articulacion o Mano.
+*/
 class Movimientos{       //clase Movimientos para obtener objetos servomotores que me hacen mover el brazo
 	private:
 		int angulo;      //privada ya que es mi atributo/característica de mi objeto

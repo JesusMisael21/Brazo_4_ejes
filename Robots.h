@@ -1,3 +1,11 @@
+/*
+* Proyecto brazo robotico
+* Jesus Misael Resendiz Cruz
+* A01706166
+* 11/06/2020
+* Esta clase define objetos de tipo Robots, con este inicializo todos los brazos completos que yo quiero,
+* en el main solo se crea uno solo para poner en practica todas las funciones que tiene integrado.
+*/
 # ifndef ROBOTS_H_
 # define  ROBOTS_H_
 #include "Restaurar.h" //llamo mi clase Restaurar
@@ -7,10 +15,10 @@
 class Robots{
 	private:
 		Restaurar PosicionesServo1;  //objetos (posiciones) de clase Restaurar que me permiten guardar 9 posiciones del ServoX para 3 tipos de cajas
-		Restaurar PosicionesServo2;  // Las cajas ya tendrán posiciones constantes en la maqueta, por lo cual los servos tendrían que tener posiciones
-		Restaurar PosicionesServo3;  //constantes (posiciones de algoritmo para guardar cajas), pero en la realidad es que los servos nunca mantienen 
-		Restaurar PosicionesServo4;  // la misma posicion, esto debido a la temperatura en su interior respecto al tiempo. Es por eso que desarrollo posiciones
-									//para que estas se puedan modificar, entonces los atributos son angulos/posiciones en forma de matrices
+		Restaurar PosicionesServo2;  
+		Restaurar PosicionesServo3;  
+		Restaurar PosicionesServo4; 
+									
 		Movimientos *servos[5];   //variable puntero, motivo de polimorfismo
 		Cajas cajasVerdes; //inicializo mis 3 cajas (objetos) de clase Cajas, con cantidad inicial de 0 cajas cada una
 		Cajas cajasRojas;
