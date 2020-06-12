@@ -10,26 +10,31 @@
 
 # ifndef CAJAS_H_
 # define  CAJAS_H_
-
+//Creacion de la clase Cajas
 class Cajas{             
 	private:
-		int cantidad;    //atributo de mi objeto caja
+		//Atributos
+		int cantidad;  
 	public:
+		// Prototipo de los constructores
 		Cajas();     
-		Cajas(int cant);     
+		Cajas(int cant); 
+		//Prototipo de los metodos
 		int get_cantidad();      
 		void set_cantidad(int);
 };
-Cajas::Cajas(){  // constructor de cajas
+//Definicion de los constructores
+Cajas::Cajas(){  
 	cantidad=0;
 }
-Cajas::Cajas(int cant){     //sobrecarga de constructor cajas
+Cajas::Cajas(int cant){   
 	cantidad=cant;
 }
-void Cajas::set_cantidad(int cant){   //establesco un nuevo valor para el atributo cantidad
+//Definicion de los metodos
+void Cajas::set_cantidad(int cant){   
 	cantidad=cant;
 }
-int Cajas::get_cantidad(){   //extraigo la característica cantidad de mi objeto
+int Cajas::get_cantidad(){   
 	return cantidad;
 }
 # endif

@@ -8,237 +8,277 @@
 *de cajas que se encuentran en diferentes espacios tridimencionales, cada tipo de caja puede contener
 * hasta la cantidad de 3. Este robot tambien puede ser manupulado manualmente con comandos de la consola.
 */
-
+//Librerias necesarias
 #include <iostream>
-#include <string> //usar variables tipo string
-#include <sstream> //usar istringstream para convertir cadena a entero
-#include <windows.h> // usar Sleep()
+#include <string> 
+#include <sstream> 
+#include <windows.h> 
 using namespace std;
-#include "Cajas.h" //llamo mi clase Cajas 
+// Llamar a la clases a instanciar
+#include "Cajas.h" 
 #include "Robots.h"
 
+//Instanciamiento de las clases 
 Robots Brazo;
-Cajas cajVerdes(0); //inicializo mis 3 cajas (objetos) de clase Cajas, con cantidad inicial de 0 cajas cada una
+//Se inicializan 3 tipos de cajas con cantidad inicial
+Cajas cajVerdes(0); 
 Cajas cajRojas(0);
 Cajas cajAmarillas(0);
 
- //variables globales
+ //Variables globales
 int posiSer1[9],posiSer2[9],posiSer3[9],posiSer4[9];
 
-string quitarChar(string cade, int cont);       //funciones prototipo inicializados en esta parte del programa
+// Prototipo funciones
+string quitarChar(string cade, int cont);       
 void recopilarPosiciones(int c);
 void menu();
 
 int main(){
 	
+	//Envío de objetos de tipo Cajas al objeto creado de tipo Robots.
 	Brazo.set_cajasVerdes(cajVerdes);
-	Brazo.set_cajasRojas(cajRojas);          //envío objetos de tipo Cajas al objeto creado de tipo Robots (Cajas son atributos de Robots)
+	Brazo.set_cajasRojas(cajRojas);          
 	Brazo.set_cajasAmarillas(cajAmarillas);
 	
-	int S3P1=0,S3P2=1,S3P3=2,S3P4=3; //variables que obtienen los angulos especificos para cada matriz de angulos  
-	int S2P1=5,S2P2=6,S2P3=7,S2P4=8;//
-	int temperatura2=Brazo.get_temperaturaServo2();   // inicializo mis variables temperatura para los servos 2 y 3 que comunmete son afectados por este factor
-	int temperatura3=Brazo.get_temperaturaServo3();   //
-	char inchar;    //acumulador de caracteres para el swith
-	string cadena=""; //cadena de caracteres para el swith
+	// Declaracion de variables locales
+	int S3P1=0,S3P2=1,S3P3=2,S3P4=3; 
+	int S2P1=5,S2P2=6,S2P3=7,S2P4=8;
+	char inchar;   
+	string cadena=""; 
 	int count=0,num;
+	
+	// Se mandan la temeraturas iniciales
+	int temperatura2=Brazo.get_temperaturaServo2();   
+	int temperatura3=Brazo.get_temperaturaServo3();  
+	
+	// Se muestra el menu de operacion
 	menu();
-	while(true){   //ciclo while simulando un microcontrolador 
-		cin>>inchar;           //ingreso mi texto en la pantalla dependiendo de lo que quiero que se active del swith
+	
+	//Ciclo while simulando un microcontrolador 
+	while(true){   
+		// Ingreso del caracter que pide el menu
+		cin>>inchar;
+
 		if(inchar=='q')break;
 		count++;
-		cadena+=inchar;     //entra al swith hasta que sea algun caracter del menu
-		switch (inchar){   
+		//Entra al swith hasta que sea algun caracter del menu
+		cadena+=inchar;     
+		switch (inchar){ 
+			// Velve a mostrar mi menú
 			case 's':	
-				menu();    //vuelo a mostrar mi menú
+				menu();    
 				cadena="";
 				count=0;
 				break;
+			//Mover el servo1 en incrementos de 1 en 1
 			case 'a':                       
 				Brazo.servo1Aumenta();
 				cout<<"Angulo servo1: "<<Brazo.get_anguloServo1()<<endl;
 				cadena="";
-				count=0;                //case que me permite mover el servo1 en incrementos de 1 en 1
+				count=0;                
 				break;
+			//Mueve el servo 1 en decrementos de 1 en 1
 			case 'b':
 				Brazo.servo1Disminuye();
 				cout<<"Angulo servo1: "<<Brazo.get_anguloServo1()<<endl;
 				cadena=""; 
-				count=0;              //case que me permite mover el servo 1 en decrementos de 1 en 1
+				count=0;            
 				break; 
+			//Mover el servo2 en incrementos de 1 en 1
 			case 'c':
 				Brazo.servo2Aumenta();
 				cout<<"Angulo servo2: "<<Brazo.get_anguloServo2()<<endl;
 				cadena="";
-				count=0;                   //case que me permite mover el servo2 en incrementos de 1 en 1
+				count=0;                  
 				break;
+			//Mueve el servo 2 en decrementos de 1 en 1
 			case 'd':
 				Brazo.servo2Disminuye();
 				cout<<"Angulo servo2: "<<Brazo.get_anguloServo2()<<endl;
 				cadena="";
-				count=0;                            //case que me permite mover el servo 2 en decrementos de 1 en 1
+				count=0;                            
 				break; 
+			//Mover el servo3 en incrementos de 1 en 1
 			case 'e':
 				Brazo.servo3Aumenta();
 				cout<<"Angulo servo3: "<<Brazo.get_anguloServo3()<<endl;
 				cadena="";
-				count=0;                  //case que me permite mover el servo3 en incrementos de 1 en 1
+				count=0;                
 				break;
+			//Mueve el servo 3 en decrementos de 1 en 1
 			case 'f':
 				Brazo.servo3Disminuye();
 				cout<<"Angulo servo3: "<<Brazo.get_anguloServo3()<<endl;
-				cadena="";                             //case que me permite mover el servo 3 en decrementos de 1 en 1
+				cadena="";                            
 				count=0;
 				break;
+			//Mover el servo4 en incrementos de 1 en 1
 			case 'g':
 				Brazo.servo4Aumenta();
 				cout<<"Angulo servo4: "<<Brazo.get_anguloServo4()<<endl;
 				cadena="";
-				count=0;                              //case que me permite mover el servo 4 en incrementos de 1 en 1
+				count=0;                             
 				break;
+			//Mueve el servo 4 en decrementos de 1 en 1
 			case 'h':
 				Brazo.servo4Disminuye();
 				cout<<"Angulo servo4: "<<Brazo.get_anguloServo4()<<endl;
-				cadena="";                                   //case que me permite mover el servo 4 en decrementos de 1 en 1
+				cadena="";                                   
 				count=0;
 				break;
+			// Quita el ultimo elemento de la cadena, despues lo inserta a la cantidad de cajas verdes a guardar
 			case ',':
-				cadena=quitarChar(cadena,count);    //quita el ultimo elemento de la cadena, 
-				istringstream(cadena)>>num;                   //quedandose con el puro numero
-				Brazo.set_CantidadCajasVerdes(num);               //posteriormente para insertarlo en el atributo de cantidad de 
-				cout<<"Cajas verdes introducidas: "<<Brazo.get_CantidadCajasVerdes()<<endl;        //cajas verdes a guardar
+				cadena=quitarChar(cadena,count);  
+				istringstream(cadena)>>num;           
+				Brazo.set_CantidadCajasVerdes(num);               
+				cout<<"Cajas verdes introducidas: "<<Brazo.get_CantidadCajasVerdes()<<endl;        
 				count=0;
 				cadena="";
 				break;
+			// Quita el ultimo elemento de la cadena, despues lo inserta a la cantidad de cajas rojas a guardar
 			case '=':
-				cadena=quitarChar(cadena,count); //mismo proceso para cajas rojas 
+				cadena=quitarChar(cadena,count); 
 				istringstream(cadena)>>num;        
 				Brazo.set_CantidadCajasRojas(num);        
 				cout<<"Cajas Rojas introducidas: "<<Brazo.get_CantidadCajasRojas()<<endl; 
 				count=0;
 				cadena="";
 				break;
+			// Quita el ultimo elemento de la cadena, despues lo inserta a la cantidad de cajas amarillas a guardar
 			case '/':
-				cadena=quitarChar(cadena,count);  //mismo proceso para cajas amarillas
+				cadena=quitarChar(cadena,count);  
 				istringstream(cadena)>>num;        
 				Brazo.set_CantidadCajasAmarillas(num);     
 				cout<<"Cajas amarillas introducidas: "<<Brazo.get_CantidadCajasAmarillas()<<endl;   
 				count=0;
 				cadena="";
 				break;
+			//Se obtiene los angulos de la posicion 1 de mi brazo para cualquier caja a guardar
 			case 'i':
-				S2P1=Brazo.get_anguloServo2();   //obtengo los angulos de la posicion 1 de mi brazo para cualquier caja a guardar
+				S2P1=Brazo.get_anguloServo2();   
 				S3P1=Brazo.get_anguloServo3();
 				cout<<"Posicion 1 pre-guardada para los servos 2 y 3."<<endl;
 				count=0;
 				cadena="";
 				break;
+			//Guarda la posicion 2 a la posicion 4 del brazo
 			case 'j':
-				S2P2=Brazo.get_anguloServo2();    //este me sirve para guardar de la posicion 2 a la posicion 4 de mi brazo, 2 3 y 4 comparten 
-				S3P2=Brazo.get_anguloServo3();    //estos mismos angulos
+				S2P2=Brazo.get_anguloServo2();    
+				S3P2=Brazo.get_anguloServo3();   
 				cout<<"Posiciones 2, 3 y 4 pre-guardadas para los servos 2 y 3."<<endl;
 				count=0;
 				cadena="";
 				break;
+			//Guarda la posicion 5 a la posicion 6 del brazo
 			case 'k':
-				S2P3=Brazo.get_anguloServo2();   //este me sirve para guardar de la posicion 5 a la posicion 6 de mi brazo, 5 y 6 comparten 
-				S3P3=Brazo.get_anguloServo3();   //estos mismos angulos
+				S2P3=Brazo.get_anguloServo2();  
+				S3P3=Brazo.get_anguloServo3(); 
 				cout<<"Posiciones 5 y 6 pre-guardadas para los servos 2 y 3."<<endl;
 				count=0;
 				cadena="";
 				break;
+			//Guarda la posicion 7 a la posicion 8 del brazo
 			case 'l':
-				S2P4=Brazo.get_anguloServo2(); //este me sirve para guardar de la posicion 7 a la posicion 8 de mi brazo, 7 y 8 comparten 
-				S3P4=Brazo.get_anguloServo3();   //estos mismos angulos
+				S2P4=Brazo.get_anguloServo2(); 
+				S3P4=Brazo.get_anguloServo3();  
 				cout<<"Posiciones 7 y 8 pre-guardadas para los servos 2 y 3."<<endl;
 				count=0;
 				cadena="";
 				break;
+			// Manda restablece todas las nuevas posiciones
 			case 'm':
 				Brazo.set_particular_PosicionesServo2(S2P1,S2P2,S2P3,S2P4);
-				Brazo.set_particular_PosicionesServo3(S3P1,S3P2,S3P3,S3P4);   // Mando a guardar atributo de posicion para restableces mis nuevas
-				cout<<"Posiciones guardadas para los servos 2 y 3."<<endl;		//posiciones
+				Brazo.set_particular_PosicionesServo3(S3P1,S3P2,S3P3,S3P4);   
+				cout<<"Posiciones guardadas para los servos 2 y 3."<<endl;		
 				count=0;                                                     
 				cadena="";
 				break;
+			// Quita el ultimo caracter y las manda al limite de abertura del robot
 			case '%':
-				cadena=quitarChar(cadena,count);     //funcion que me quita el ultimo elemento de la cadena, 
-				istringstream(cadena)>>num;          //quedandonme con el puro numero
-				Brazo.set_limiteAberturaServo4(num);  //asigno el angulo maximo de abertura para mi mano
-				cout<<"Limite de abertura para servo 4: "<<Brazo.get_limiteAberturaServo4()<<endl;   //cajas rojas a guardar
+				cadena=quitarChar(cadena,count);     
+				istringstream(cadena)>>num;    
+				Brazo.set_limiteAberturaServo4(num); 
+				cout<<"Limite de abertura para servo 4: "<<Brazo.get_limiteAberturaServo4()<<endl;  
 				count=0;
 				cadena="";
 				break;
+			// Quita el ultimo caracter y las manda al limite de cerradura del robot
 			case '#':
-				cadena=quitarChar(cadena,count);     //funcion que me quita el ultimo elemento de la cadena, 
-				istringstream(cadena)>>num;          //quedandonme con el puro numero
-				Brazo.set_limiteCerraduraServo4(num);  //asigno el angulo limite de cerradura para mi mano
-				cout<<"Limite de cerradura para servo 4: "<<Brazo.get_limiteCerraduraServo4()<<endl;   //cajas rojas a guardar
+				cadena=quitarChar(cadena,count);    
+				istringstream(cadena)>>num;         
+				Brazo.set_limiteCerraduraServo4(num);  
+				cout<<"Limite de cerradura para servo 4: "<<Brazo.get_limiteCerraduraServo4()<<endl;  
 				count=0;
 				cadena="";
 				break;
+			//Guarda la cantidad de cajas verdes introducidas
 			case 'n':
-				recopilarPosiciones(0);                               //refresco mis posiciones antes de ejecutar el algoritmo de guardado
-				if(Brazo.get_CantidadCajasVerdes()>0 and Brazo.get_temperaturaServo2()<100 and Brazo.get_temperaturaServo3()<100 and Brazo.get_limiteCerraduraServo4()>10 and Brazo.get_limiteAberturaServo4()<60){  //si hay algo que guardar de las cajas verdes 
+				recopilarPosiciones(0);                               
+				if(Brazo.get_CantidadCajasVerdes()>0 and Brazo.get_temperaturaServo2()<100 and Brazo.get_temperaturaServo3()<100 and Brazo.get_limiteCerraduraServo4()>10 and Brazo.get_limiteAberturaServo4()<60){
 					cout<<endl<<endl<<"                   Guardando "<<Brazo.get_CantidadCajasVerdes()<<" cajas verdes..."<<endl<<endl;
 					cout<<"               Servo1:"<<"        Servo2:"<<"     Servo3:"<<"       Servo4:"<<endl;
-					for(int i=0;i<Brazo.get_CantidadCajasVerdes();i++){     //que lo ejecute la cantidad de veces propuestas
-						for(int j=0;j<9;j++){                          //con las 9 posiciones necesarias para guardar una sola caja
+					for(int i=0;i<Brazo.get_CantidadCajasVerdes();i++){    
+						for(int j=0;j<9;j++){                        
 							Brazo.set_anguloServo1(posiSer1[j]);
 							Brazo.set_anguloServo2(posiSer2[j]);
 							Brazo.set_anguloServo3(posiSer3[j]);
 							Brazo.set_anguloServo4(posiSer4[j]);    
 							cout<<"Posicion "<<j+1<<":        "<<Brazo.get_anguloServo1()<<"            "<<Brazo.get_anguloServo2()<<"            "<<Brazo.get_anguloServo3()<<"            "<<Brazo.get_anguloServo4()<<endl;
-							Sleep(1000); // un segundo por movimiento 
+							Sleep(1000); 
 						}
 					}
 					cout<<endl<<endl<<"                     Listo!"<<endl;
-					Brazo.set_temperaturaServo2(temperatura2++);  //incrementa la temperatura por movimiento de los servos
+					 // Incrementa la temperatura por movimiento de los servos
+					Brazo.set_temperaturaServo2(temperatura2++); 
 					Brazo.set_temperaturaServo3(temperatura3++);
 				}
 				count=0;             
 				cadena="";
 				break;
+			//Guarda la cantidad de cajas rojas introducidas
 			case 'o':
-				recopilarPosiciones(1);                               //refresco mis posiciones antes de ejecutar el algoritmo de guardado
-				if(Brazo.get_CantidadCajasRojas()>0 and Brazo.get_temperaturaServo2()<100 and Brazo.get_temperaturaServo3()<100 and Brazo.get_limiteCerraduraServo4()>10 and Brazo.get_limiteAberturaServo4()<60){  //si hay algo que guardar de las cajas rojas 
+				recopilarPosiciones(1);                               
+				if(Brazo.get_CantidadCajasRojas()>0 and Brazo.get_temperaturaServo2()<100 and Brazo.get_temperaturaServo3()<100 and Brazo.get_limiteCerraduraServo4()>10 and Brazo.get_limiteAberturaServo4()<60){ 
 					cout<<endl<<endl<<"                   Guardando "<<Brazo.get_CantidadCajasRojas()<<" cajas rojas..."<<endl<<endl;
 					cout<<"               Servo1:"<<"        Servo2:"<<"     Servo3:"<<"       Servo4:"<<endl;
-					for(int i=0;i<Brazo.get_CantidadCajasRojas();i++){     //que lo ejecute la cantidad de veces propuestas
-						for(int j=0;j<9;j++){                          //con las 9 posiciones necesarias para guardar una sola caja
+					for(int i=0;i<Brazo.get_CantidadCajasRojas();i++){    
+						for(int j=0;j<9;j++){                          
 							Brazo.set_anguloServo1(posiSer1[j]);
 							Brazo.set_anguloServo2(posiSer2[j]);
 							Brazo.set_anguloServo3(posiSer3[j]);
 							Brazo.set_anguloServo4(posiSer4[j]);    
 							cout<<"Posicion "<<j+1<<":        "<<Brazo.get_anguloServo1()<<"            "<<Brazo.get_anguloServo2()<<"            "<<Brazo.get_anguloServo3()<<"            "<<Brazo.get_anguloServo4()<<endl;
-							Sleep(1000); // un segundo por movimiento 
+							Sleep(1000);
 						}
 					}
 					cout<<endl<<endl<<"                     Listo!"<<endl;
+					 // Incrementa la temperatura por movimiento de los servos
 					Brazo.set_temperaturaServo2(temperatura2++);
-					Brazo.set_temperaturaServo3(temperatura3++);  //incrementa la temperatura por movimiento de los servos
+					Brazo.set_temperaturaServo3(temperatura3++); 
 				}
 				count=0;                                                    
 				cadena="";
 				break;
+			//Guarda la cantidad de cajas amarillas introducidas
 			case 'p':
-				recopilarPosiciones(2);                               //refresco mis posiciones antes de ejecutar el algoritmo de guardado
-				if(Brazo.get_CantidadCajasAmarillas()>0 and Brazo.get_temperaturaServo2()<100 and Brazo.get_temperaturaServo3()<100 and Brazo.get_limiteCerraduraServo4()>10 and Brazo.get_limiteAberturaServo4()<60){   //si hay algo que guardar de las cajas amarillas 
+				recopilarPosiciones(2);                             
+				if(Brazo.get_CantidadCajasAmarillas()>0 and Brazo.get_temperaturaServo2()<100 and Brazo.get_temperaturaServo3()<100 and Brazo.get_limiteCerraduraServo4()>10 and Brazo.get_limiteAberturaServo4()<60){  
 					cout<<endl<<endl<<"                   Guardando "<<Brazo.get_CantidadCajasAmarillas()<<" cajas amarillas..."<<endl<<endl;
 					cout<<"               Servo1:"<<"        Servo2:"<<"     Servo3:"<<"       Servo4:"<<endl;
-					for(int i=0;i<Brazo.get_CantidadCajasAmarillas();i++){     //que lo ejecute la cantidad de veces propuestas
-						for(int j=0;j<9;j++){                          //con las 9 posiciones necesarias para guardar una sola caja
+					for(int i=0;i<Brazo.get_CantidadCajasAmarillas();i++){    
+						for(int j=0;j<9;j++){                         
 							Brazo.set_anguloServo1(posiSer1[j]);
 							Brazo.set_anguloServo2(posiSer2[j]);
 							Brazo.set_anguloServo3(posiSer3[j]);
-							Brazo.set_anguloServo4(posiSer4[j]);    //itero mis apuntadores 
+							Brazo.set_anguloServo4(posiSer4[j]);   
 							cout<<"Posicion "<<j+1<<":        "<<Brazo.get_anguloServo1()<<"            "<<Brazo.get_anguloServo2()<<"            "<<Brazo.get_anguloServo3()<<"            "<<Brazo.get_anguloServo4()<<endl;
-							Sleep(1000); // un segundo por movimiento 
+							Sleep(1000); 
 						}
 					}
 					cout<<endl<<endl<<"                     Listo!"<<endl;
+					// Incrementa la temperatura por movimiento de los servos
 					Brazo.set_temperaturaServo2(temperatura2++);
-					Brazo.set_temperaturaServo3(temperatura3++);  //incrementa la temperatura por movimiento de los servos
+					Brazo.set_temperaturaServo3(temperatura3++);  
 				}
 				count=0;                                                    
 				cadena="";
@@ -249,14 +289,16 @@ int main(){
 	cout<<"adios";
 	return 0;
 } // end main
-string quitarChar(string cade, int cont){  //funcion que me elimina el ultimo caracter de mi cadena
+//Funcion que me elimina el ultimo caracter de mi cadena
+string quitarChar(string cade, int cont){  
 	string cad="";
 	for(int i=0;i<cont-1;i++){
 		cad=cad+cade[i];
 	}
 	return cad;
 }
-void recopilarPosiciones(int c){ //columna c donde se encuentran los 9 valores para el servo X que almacena poscicion
+// Funcion que recopila la posicion particular de cada servo
+void recopilarPosiciones(int c){ 
 	for(int f=0;f<9;f++){
 		posiSer1[f]=Brazo.get_particular_PosicionesServo1(f,c);
 		posiSer2[f]=Brazo.get_particular_PosicionesServo2(f,c);
@@ -264,6 +306,7 @@ void recopilarPosiciones(int c){ //columna c donde se encuentran los 9 valores p
 		posiSer4[f]=Brazo.get_particular_PosicionesServo4(f,c);
 	}
 }
+// Menu operativo
 void menu(){
 	cout<<"       Menu: \n";
 	cout<<"'a' Incrementa 1 grado servomotor 1 (base).\n";
