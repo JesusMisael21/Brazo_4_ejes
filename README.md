@@ -6,55 +6,57 @@ Se usan los conceptor de programación orientado a objetos, para instanciar elem
 
 # Funcionalidad (opciones que se pueden realizar).
 
-       Menu:
-Incrementa 1 grado servomotor 1 (base).
+Desde el main puedes realizar todas estas opciones para que el robot las realice. Este main con las opciones simula ser la interfaz de usuario.
 
-Decrementa 1 grado servomotor 1 (base).
+Opciones:
 
-Incrementa 1 grado servomotor 2 (articulacion 1).
+* Incrementa 1 grado servomotor 1 (base).
 
-Decrementa 1 grado servomotor 2 (articulacion 1).
+* Decrementa 1 grado servomotor 1 (base).
 
-Incrementa 1 grado servomotor 3 (articulacion 2).
+* Incrementa 1 grado servomotor 2 (articulacion 1).
 
-Decrementa 1 grado servomotor 3 (articulacion 2).
+* Decrementa 1 grado servomotor 2 (articulacion 1).
 
-Incrementa 1 grado servomotor 4 (mano).
+* Incrementa 1 grado servomotor 3 (articulacion 2).
 
-Decrementa 1 grado servomotor 4 (mano).
+* Decrementa 1 grado servomotor 3 (articulacion 2).
 
-Cantidad de cajas verdes a guardar.
+* Incrementa 1 grado servomotor 4 (mano).
+
+* Decrementa 1 grado servomotor 4 (mano).
+
+* Cantidad de cajas verdes a guardar.
        
-Cantidad de cajas Rojas a guardar.
+* Cantidad de cajas Rojas a guardar.
        
-Cantidad de cajas Amarillas a guardar.
+* Cantidad de cajas Amarillas a guardar.
        
-Pre-guardar posicion 1 para servos 2 y 3.
+* Pre-guardar posicion 1 para servos 2 y 3.
 
-Pre-guardar posiciones 2, 3 y 4 para servos 2 y 3.
+* Pre-guardar posiciones 2, 3 y 4 para servos 2 y 3.
 
-Pre-guardar posiciones 5 y 6 para servos 2 y 3.
+* Pre-guardar posiciones 5 y 6 para servos 2 y 3.
 
-Pre-guardar posiciones 7 y 8 para servos 2 y 3.
+* Pre-guardar posiciones 7 y 8 para servos 2 y 3.
 
-Guardar posiciones pre-guardadas para los servos 2 y 3.
+* Guardar posiciones pre-guardadas para los servos 2 y 3.
 
-Asignacion de abertura limite de la mano del robot.
+* Asignacion de abertura limite de la mano del robot.
        
-Asignacion de cerradura limite de la mano del robot.
+* Asignacion de cerradura limite de la mano del robot.
        
-Guardar cajas verdes en los contenedores.
+*¨Guardar cajas verdes en los contenedores.
 
-Guardar cajas rojas en los contenedores.
+* Guardar cajas rojas en los contenedores.
 
-Guardar cajas amarillas en los contenedores.
-
-VOLVER A MOSTRAR EL MENU.
-
-Salir del programa.
+* Guardar cajas amarillas en los contenedores.
 
 # Consideraciones
 
 El programa correrá en Windows, ya que cuenta con la librería windows.h para usar la función Sleep().
 
 Compilar con: "g++ brazo.cpp -o brazo.exe" y correr "brazo.exe"
+
+En caso de hacer la modificación para quitar la libreria windows.h y poner otra para funcion de retardo para linux: 
+correr en linux: "/a.out"
